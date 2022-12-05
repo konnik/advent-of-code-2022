@@ -1,0 +1,3 @@
+#/bin/bash
+
+find ./Day$1.hs ./Day$1.txt ./Lib.hs | entr -rc sh -c "cat ./Day$1.txt | runghc ./Day$1.hs"

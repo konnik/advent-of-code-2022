@@ -1,0 +1,4 @@
+#/bin/bash
+
+cp DayX.hs Day$1.hs
+cp DayX.txt Day$1.txt
