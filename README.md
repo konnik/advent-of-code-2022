@@ -29,12 +29,25 @@ solve2 input =
     "<inte löst ännu...>"
 ```
 
+## Initera en ny dag
+
+Skapar en tom källkodsfil för angiven dag och initierar en tom input-fil. 
+
+```bash
+./init <dag>
+```
+**Bonus:** om du skapar en fil `.aoc-session` och lägger in värdet på din sessionskaka från adventofcode.com i denna 
+så kommer scriptet även att ladda ned dagens input automatiskt. 
+
+Sessionskakan hittar du enkelt via utvecklar-konsollen i din webbläsare.
+
+
 ## Kör dagens lösning
 
 Kör dagens lösning med scriptet `watch`.
 
 ```bash
-./watch 1
+./watch <dag>
 ```
 
 Scriptet använder det utmärkta verktyget [entr](https://github.com/eradman/entr) för att automatiskt kompilera om och köra koden vid en förändring. 
@@ -42,7 +55,8 @@ Scriptet använder det utmärkta verktyget [entr](https://github.com/eradman/ent
 Om allt går bra skrivs svaret ut.
 
 ```bash
-1337
+Svar1: 1337
+Svar2: <ej löst ännu...>
 ```
 
 Annars kommer kompilatorns felmeddelanden att visas.  
@@ -61,10 +75,10 @@ Perfekt att köra i ett terminalfönster vid sidan om och få direkt feedback ö
 
 ## Starta repl
 
-Du kan starta ghci med koden för dag 1 med scriptet `repl`
+Du kan starta ghci med koden för en viss dag med scriptet `repl`
 
 ```bash
-./repl 1
+./repl <dag>
 
 GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
 [1 of 2] Compiling Lib              ( Lib.hs, interpreted )
