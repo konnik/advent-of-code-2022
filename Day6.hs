@@ -11,7 +11,8 @@ solve2 :: String -> String
 solve2 = show . (+14) . length . takeWhile (not . unique) . slidingWindow 14
 
 slidingWindow :: Int -> [a] -> [[a]]
-slidingWindow n xs = take n xs : slidingWindow n (drop 1 xs)
+slidingWindow n xs | length xs < n = []
+                   | otherwise     = take n xs : slidingWindow n (drop 1 xs)
 
 unique :: Ord a => [a] -> Bool
 unique xs = length xs == length (nub $ sort xs)
