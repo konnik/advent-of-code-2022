@@ -8,7 +8,7 @@ main = runSolver solve1 solve2
 
 solve1 :: String -> String
 solve1 input =
-    "Antal rader: " ++ show (lines input)
+    "Antal rader: " ++ show (length (lines input))
 
 solve2 :: String -> String
 solve2 input =
