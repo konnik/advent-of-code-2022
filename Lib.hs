@@ -6,11 +6,6 @@ where
 
 import           Data.Foldable (foldl', foldr)
 
-
-isComment :: String -> Bool
-isComment []    = False
-isComment (c:_) = c == '#'
-
 -- MAIN RUNNER
 
 runSolver :: (String -> String) -> (String -> String) -> IO ()
