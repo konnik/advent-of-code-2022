@@ -11,7 +11,7 @@ solve1 input =
 
 solve2 :: String -> String
 solve2 input =
-    ("\n" ++) $ unlines$ chunks 40 $ map pixel $ run (1,1) (lines input)
+    unlines$ chunks 40 $ map pixel $ run (1,1) (lines input)
 
 chunks :: Int -> [a] -> [[a]]
 chunks _ [] = []

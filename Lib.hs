@@ -19,7 +19,7 @@ runSolver s1 s2 =
     where
         solveBoth :: (String -> String) -> (String -> String) -> String -> String
         solveBoth s1 s2 input =
-            "Svar1: " ++ s1 input ++ "\n" ++ "Svar2: " ++ s2 input ++ "\n"
+            "Answer 1:\n" ++ s1 input ++ "\n\n" ++ "Answer 2:\n" ++ s2 input ++ "\n"
 
 toInt :: String -> Int
 toInt = read
