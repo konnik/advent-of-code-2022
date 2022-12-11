@@ -28,7 +28,3 @@ run (cycle, val) (x:xs)  =
         ["noop"]    -> (cycle, val):run (cycle+1,val) xs
         ["addx", x] -> (cycle, val):(cycle+1,val):run (cycle+2, val + read x) xs
         x           -> error ("Illegal instruction: "  ++ concat x)
-
-chunks :: Int -> [a] -> [[a]]
-chunks _ [] = []
-chunks n xs = take n xs : chunks n (drop n xs)

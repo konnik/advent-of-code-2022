@@ -36,3 +36,6 @@ replaceAt n newValue xs | n < 0          = xs
                         | otherwise      = take n xs ++ [newValue] ++ drop (n+1) xs
 
 
+chunks :: Int -> [a] -> [[a]]
+chunks _ [] = []
+chunks n xs = take n xs : chunks n (drop n xs)
