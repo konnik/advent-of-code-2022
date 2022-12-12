@@ -39,6 +39,8 @@ floodFill  =  d . u . l . r
 
 fillRow :: [Cell] -> [Cell]
 fillRow = scanl1 fillNeighbour
+
+fillNeighbour :: Cell -> Cell -> Cell
 fillNeighbour a b
     | (height b - height a >= -1) && steps a < steps b    = b { steps = steps a + 1 }
     | otherwise                       = b
