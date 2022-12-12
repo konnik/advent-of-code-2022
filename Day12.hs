@@ -30,15 +30,15 @@ data Cell = Cell { height::Int, steps :: Int } deriving (Eq, Show)
 
 
 floodFill :: Heightmap -> Heightmap
-floodFill  =  d . u . l . r
+floodFill  =  down . up . left . right
     where
-        r = fmap fillRow
-        l = fmap (reverse . fillRow . reverse)
-        d = transpose . fmap fillRow . transpose
-        u = transpose . fmap (reverse . fillRow . reverse) . transpose
+        right = fmap fillRight
+        left = fmap (reverse . fillRight . reverse)
+        down = transpose . fmap fillRight . transpose
+        up = transpose . fmap (reverse . fillRight . reverse) . transpose
 
-fillRow :: [Cell] -> [Cell]
-fillRow = scanl1 fillNeighbour
+fillRight :: [Cell] -> [Cell]
+fillRight = scanl1 fillNeighbour
 
 fillNeighbour :: Cell -> Cell -> Cell
 fillNeighbour a b
