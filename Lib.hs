@@ -24,6 +24,10 @@ splitOn sep [] = []
 splitOn sep xs = takeWhile (/=sep) xs : splitOn sep (drop 1 $ dropWhile (/=sep) xs)
 
 
+converge :: (a -> a -> Bool) -> [a] -> a
+converge f xs = fst $ head $ dropWhile (not . uncurry f) $ zip xs $ drop 1 xs
+
+
 -- | replace all elements of value a with value b
 replace :: Eq a => a -> a -> [a] -> [a]
 replace a b = fmap (\x -> if x == a then b else x)

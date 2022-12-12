@@ -20,11 +20,7 @@ solve2 input =
 
 solve :: String -> Heightmap
 solve input =
-    untilDone $ iterate floodFill $ parseMap input
-    where
-        untilDone :: [Heightmap] -> Heightmap
-        untilDone (a:b:rest) = if a == b then a else untilDone (b:rest)
-        untilDone _          = error "No steps"
+    converge (==) $ iterate floodFill $ parseMap input
 
 -- Heightmap stuff
 
