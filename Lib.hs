@@ -35,6 +35,12 @@ replaceAt n newValue xs | n < 0          = xs
                         | n >= length xs = xs
                         | otherwise      = take n xs ++ [newValue] ++ drop (n+1) xs
 
+-- | Update an element at a specific index with a new value.
+updateAt :: Int -> (a -> a) -> [a] -> [a]
+updateAt n f xs | n < 0          = xs
+                | n >= length xs = xs
+                | otherwise      = take n xs ++ [f (xs !! n)] ++ drop (n+1) xs
+
 
 chunks :: Int -> [a] -> [[a]]
 chunks _ [] = []
