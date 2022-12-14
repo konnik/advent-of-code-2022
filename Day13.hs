@@ -21,33 +21,36 @@ solve2 input =
         divider2 = head $ parse "[[6]]"
 
 
-data Val = Val Int | List [Val] deriving (Show, Eq)
+data Packet
+    = List [Packet]
+    | Int Int
+    deriving (Show, Eq)
 
 -- comparing
 
-comparePackets :: Val -> Val -> Ordering
-comparePackets (Val a) (Val b)     | a < b     = LT
-                          | a == b    = EQ
-                          | otherwise = GT
+comparePackets :: Packet -> Packet -> Ordering
+comparePackets (Int a) (Int b)
+                       | a < b     = LT
+                       | a == b    = EQ
+                       | otherwise = GT
 comparePackets (List as) (List bs) =  compareList as bs
-comparePackets (Val a) (List bs)   =  compareList [Val a] bs
-comparePackets (List as) (Val b)   =  compareList as [Val b]
+comparePackets (Int a)   (List bs) =  compareList [Int a] bs
+comparePackets (List as) (Int b)   =  compareList as [Int b]
 
-compareList :: [Val] -> [Val] -> Ordering
-compareList [] []         = EQ
-compareList [] (_:_)      = LT
-compareList (_:_) []      = GT
+compareList :: [Packet] -> [Packet] -> Ordering
+compareList []     []     = EQ
+compareList []     (_:_)  = LT
+compareList (_:_)  []     = GT
 compareList (a:as) (b:bs) = case comparePackets a b of
-                            LT -> LT
-                            GT -> GT
                             EQ -> compareList as bs
+                            x  -> x
 
 -- parsning
 
-parse :: String -> [Val]
+parse :: String -> [Packet]
 parse = fmap (fst . fromJust . parseValue . tokenize) . filter (/="") . lines
 
-parseList :: [Token] -> Maybe (Val, [Token])
+parseList :: [Token] -> Maybe (Packet, [Token])
 parseList [] = error "no more tokens"
 parseList (LB:xs) =
     case parseValues xs of
@@ -56,7 +59,7 @@ parseList (LB:xs) =
 
 parseList (_:xs) = Nothing
 
-parseValues :: [Token] -> Maybe ([Val], [Token])
+parseValues :: [Token] -> Maybe ([Packet], [Token])
 parseValues (RB:xs) = Just ([], xs)
 parseValues xs =
     case parseValue xs of
@@ -66,9 +69,9 @@ parseValues xs =
                 Just (vals, xs'') -> Just (val:vals, xs'')
                 Nothing           -> Nothing
 
-parseValue :: [Token] -> Maybe (Val, [Token])
+parseValue :: [Token] -> Maybe (Packet, [Token])
 parseValue (LB:xs)  = parseList (LB:xs)
-parseValue (I n:xs) = Just (Val n, xs)
+parseValue (I n:xs) = Just (Int n, xs)
 parseValue _        = Nothing
 
 -- tokenize
