@@ -27,6 +27,9 @@ splitOn sep xs = takeWhile (/=sep) xs : splitOn sep (drop 1 $ dropWhile (/=sep) 
 converge :: (a -> a -> Bool) -> [a] -> a
 converge f xs = fst $ head $ dropWhile (not . uncurry f) $ zip xs $ drop 1 xs
 
+findIndices :: (a -> Bool) -> [a] -> [Int]
+findIndices f = fmap fst . filter (f . snd) . zip [1..]
+
 
 -- | replace all elements of value a with value b
 replace :: Eq a => a -> a -> [a] -> [a]
