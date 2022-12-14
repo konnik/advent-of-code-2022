@@ -1,4 +1,6 @@
-import           Data.Char (digitToInt)
+{-# LANGUAGE LambdaCase #-}
+import           Data.Char  (digitToInt)
+import           Data.Maybe (catMaybes)
 import           Lib
 
 main :: IO ()
@@ -6,15 +8,19 @@ main = runSolver solve1 solve2
 
 solve1 :: String -> String
 solve1 input =
-    show  $ sum $ map (fst) $  filter (snd) $ zip [1..] $ fmap (uncurry check) $ fmap (\pair -> (lexer $ pair !! 0, lexer $ pair !! 1)) $ chunks 3 $ lines input
+    -- show $ length $ chunks 3 $ lines input
+    -- show  $ sum $ map (fst) $  filter (snd) $ zip [1..] $ fmap (uncurry check) $ fmap (\pair -> (lexer $ pair !! 0, lexer $ pair !! 1)) $ chunks 3 $ lines input
     --show  $ sum $ map (fst) $  filter (snd) $ zip [1..] $ fmap (uncurry check) $ fmap (\pair -> (lexer $ pair !! 0, lexer $ pair !! 1)) $ chunks 3 $ lines testinput
     --show $ skipRest 0 $ drop 1 $ lexer "[23,23,[99]],[32,32,32]"
     --show $ check (lexer "[9]") (lexer "[[8,7,6]]")
 
     --show (check a b , a, b)
+
+    show  (c, fst <$> parseList  c)
     where
         a = lexer "[99,9]"
         b = lexer "[[8,7,6]]"
+        c = lexer "[1,[2,[3,[4,[5,6,7]]]],8,9]"
 
 
 solve2 :: String -> String
@@ -45,6 +51,33 @@ testinput = "[1,1,3,1,1]\n\
             \\n\
             \[1,[2,[3,[4,[5,6,7]]]],8,9]\n\
             \[1,[2,[3,[4,[5,6,0]]]],8,9]"
+
+
+data Val = Val Int | List [Val] deriving (Show, Eq)
+
+parseList :: [Token] -> Maybe (Val, [Token])
+parseList [] = error "no more tokens"
+parseList (LB:xs) =
+    case parseValues xs of
+        Just (vals, xs') -> Just (List vals, xs')
+        Nothing          -> Nothing
+
+parseList (_:xs) = Nothing
+
+parseValues :: [Token] -> Maybe ([Val], [Token])
+parseValues (RB:xs) = Just ([], xs)
+parseValues xs =
+    case parseValue xs of
+        Nothing -> error "expected value"
+        Just (val, xs') ->
+            case parseValues xs' of
+                Just (vals, xs'') -> Just (val:vals, xs'')
+                Nothing           -> Nothing
+
+parseValue :: [Token] -> Maybe (Val, [Token])
+parseValue (LB:xs)  = parseList (LB:xs)
+parseValue (I n:xs) = Just (Val n, xs)
+parseValue _        = Nothing
 
 data Token = LB | RB | I Int deriving (Eq, Show)
 
