@@ -36,6 +36,9 @@ replace :: Eq a => a -> a -> [a] -> [a]
 replace a b = fmap (\x -> if x == a then b else x)
 
 
+replaceAll :: Eq a => [a] -> a -> [a] -> [a]
+replaceAll as b = fmap (\x -> if x `elem` as then b else x)
+
 -- | Replace an element at a specific index with a new value.
 replaceAt :: Int -> a -> [a] -> [a]
 replaceAt n newValue xs | n < 0          = xs
